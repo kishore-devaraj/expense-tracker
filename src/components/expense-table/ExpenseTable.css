@@ -16,4 +16,5 @@
 
 .expense-table-details-container > img {
   padding: 0.2em;
+  cursor: pointer;
 }

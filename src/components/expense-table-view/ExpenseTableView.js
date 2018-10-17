@@ -42,10 +42,10 @@ const TableRow = (props) => {
           <td>{props.title}</td>
           <td>{props.amount}</td>
           <td onClick={props.handleUpdate}>
-              <img src={editIcon} alt='Update icon' id={props.serialNo}/>
+              <img src={editIcon} alt='Update icon' id={props.serialNo} style={{cursor: 'pointer'}}/>
           </td>
           <td onClick={props.handleDelete}>
-              <img src={trashIcon} alt='Delete icon' id={props.serialNo}/>
+              <img src={trashIcon} alt='Delete icon' id={props.serialNo} style={{cursor: 'pointer'}}/>
           </td>
       </tr>
   )
