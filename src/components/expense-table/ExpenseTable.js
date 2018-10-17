@@ -44,12 +44,24 @@ class ExpenseTable extends React.Component {
   handleDelete(e) {
     e.preventDefault()
     let indexToBeDeleted = e.target.id
-    console.log(indexToBeDeleted)
-    // let newListOfNames = this.state.listOfNames.slice()
-    // newListOfNames = newListOfNames.filter((name, index) => {
-    //   return index === indexToBeDeleted ? false : name
-    // })
-    // this.setState({listOfNames: newListOfNames})
+    // console.log(indexToBeDeleted)
+    let newListOfExpense = this.state.listOfExpense.slice()
+    newListOfExpense = newListOfExpense.filter((expense, index) => {  
+         
+      if(index === Number(indexToBeDeleted)){
+        const id = expense._id
+        fetch(expenseEndPoint + '/' + id, {
+          method: 'delete',
+          headers: {"Content-Type": "application/json"}
+        }).then(res => {
+          console.log('Deleted')
+        })
+        .catch(err => console.log(err))
+        return false
+      } else return expense
+    })
+
+    this.setState({listOfExpense: newListOfExpense})
   }
 
   handleUpdate(e) {
@@ -86,9 +98,6 @@ class ExpenseTable extends React.Component {
       this.closeModal()
       console.log('Submitted')
     }
-
-
-
   }
 
   openModal() {
