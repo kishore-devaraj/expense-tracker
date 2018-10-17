@@ -1,0 +1,56 @@
+.table-container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: column nowrap;
+  overflow: hidden;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  margin: 1em;
+}
+
+table {
+  width: 100%;
+  font-size: 0.9em;
+}
+
+thead {
+  background-color: #7C49E2;
+}
+
+th, td {
+  padding: 1em;
+}
+
+td {
+  color: #808080;
+}
+
+th {
+  text-align: left;
+  color: white;
+}
+
+tbody, tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+} 
+
+tbody {
+  display: block;
+  height: 70vh;
+  overflow-y: auto;
+}
+
+tbody > tr:nth-child(even) {
+  background-color: #f8f6ff
+}
+
+tbody > tr:nth-child(odd) {
+  background-color: white;
+}
+
+#noUserTd {
+  display: flex;
+  justify-content: center;
+}

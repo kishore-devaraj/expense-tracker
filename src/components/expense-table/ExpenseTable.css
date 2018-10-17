@@ -1,0 +1,19 @@
+.expense-table-container {
+  flex: 1 1 auto;
+  background-color: #FAFAFA;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.expense-table-container > .expense-table-details-container {
+  flex: 0 0 auto;
+  height: 3.5em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 3em;
+}
+
+.expense-table-details-container > img {
+  padding: 0.2em;
+}

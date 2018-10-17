@@ -1,0 +1,21 @@
+.nav-section-container {
+  flex: 0 0 auto;
+  width: 20%;
+  min-width: 13em;
+}
+
+.nav-list-container > .nav-item-name {
+  display: flex;
+  align-items: center;
+  padding: 1em 2em;
+}
+
+.nav-list-container > .nav-item-name:first-of-type {
+  padding: 2em 2em 1em;
+}
+
+.nav-list-container > .nav-item-name:hover {
+  background-color: #EBEBEB;
+  cursor: pointer;
+}
+
