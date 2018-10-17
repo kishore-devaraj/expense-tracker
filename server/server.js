@@ -49,7 +49,22 @@ app.delete('/api/v1/expense/:id', (req, res) => {
   }).catch( e => res.status(400).send())
 })
 
-
+app.put('/api/v1/expense/:id', (req, res) => {
+  const id = req.params.id
+  if(!ObjectId.isValid(id)) return res.status(404).send({'errorMessage': 'Expense id is not valid'})
+  
+  const body = _.pick(req.body, ['title', 'time', 'amount'])
+  Expense.findOneAndUpdate(
+    {_id: id},
+    {$set : body}, 
+    {new : true})
+  .then(expense => {
+    if (!expense) {
+      return Promise.reject()
+    }
+    res.send(expense)
+  }).catch(e => res.status(404).send(e))
+})
 
 app.listen(PORT, (err) => {
   if (err) return console.log(err)
