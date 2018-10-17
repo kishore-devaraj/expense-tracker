@@ -38,9 +38,9 @@ class AddExpense extends React.Component {
               <img src={closeIcon} alt='close icon' style={{cursor: 'pointer'}} onClick={this.props.closeModal} />
             </div>
             <form className="expense-adding-form" autoComplete='off' onSubmit={this.props.handleSubmit}>
-            <CustomInput type='text' label='Title' id='title-field' name='titleId' placeholder='Title goes here' />
-            <CustomInput type='text' label='Amount' id='amount-field' name='amountId' placeholder='Amount Spent' />
-            <CustomInput type='text' label='Date' id='date-field' name='dateId' placeholder='On Which Date' />
+            <CustomInput type='text' label='Title' id='titleField' name='titleId' placeholder='Title goes here' />
+            <CustomInput type='number' label='Amount' id='amountField' name='amountId' placeholder='Amount Spent' />
+            <CustomInput type='text' label='Date' id='dateField' name='dateId' placeholder='On Which Date' />
             <CustomButton buttonText='Add' />
             </form>
           </section>

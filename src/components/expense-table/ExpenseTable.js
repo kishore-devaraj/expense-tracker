@@ -59,6 +59,9 @@ class ExpenseTable extends React.Component {
 
   handleAddExpenseSubmit (e) {
     e.preventDefault()
+    console.log(e.target.titleId.value)
+    console.log(e.target.amountId.value)
+    console.log(e.target.dateId.value)
     console.log('Submitted')
   }
 
