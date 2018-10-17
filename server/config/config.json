@@ -1,10 +1,10 @@
 {
   "development": {
     "PORT": 3001,
-    "PROD_MONGODB": "mongodb://localhost:27017/mail-composer"
+    "PROD_MONGODB": "mongodb://localhost:27017/expense-tracker"
   },
   "testing": {
     "PORT": 3001,
-    "PROD_MONGODB": "mongodb://localhost:27017/mail-composer-test"
+    "PROD_MONGODB": "mongodb://localhost:27017/expense-tracker"
   }
 }
