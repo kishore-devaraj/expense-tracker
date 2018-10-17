@@ -1,5 +1,6 @@
 import React from 'react'
 import fetch from 'cross-fetch'
+import moment from 'moment'
 
 import './ExpenseTable.css'
 import { expenseEndPoint } from '../../config/httpConfig'
@@ -7,6 +8,7 @@ import plusIcon from '../../assets/plus-circle-outline.svg'
 
 import ExpenseTableView from '../expense-table-view/ExpenseTableView'
 import AddExpense from '../add-expense/AddExpense'
+import { get } from 'https';
 
 class ExpenseTable extends React.Component {
   constructor(props) {
@@ -21,18 +23,21 @@ class ExpenseTable extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleAddExpenseSubmit = this.handleAddExpenseSubmit.bind(this)
+    this.getExpense = this.getExpense.bind(this)
   }
 
-  componentDidMount () {
-    console.log(expenseEndPoint)
+  componentDidMount() {
+    this.getExpense()
+  }
 
-    fetch('http://localhost:3001/api/v1/expense')
-    .then(res => res.json())
-    .then(expenses => {
-      console.log(expenses)
-      this.setState({listOfExpense: expenses})
-    })
-    .catch(e => console.log(e))
+  getExpense () {
+    fetch(expenseEndPoint)
+      .then(res => res.json())
+      .then(expenses => {
+        console.log(expenses)
+        this.setState({ listOfExpense: expenses })
+      })
+      .catch(e => console.log(e))
   }
 
 
@@ -52,12 +57,38 @@ class ExpenseTable extends React.Component {
     console.log('Updating')
   }
 
-  handleAddExpenseSubmit (e) {
+  handleAddExpenseSubmit(e) {
     e.preventDefault()
-    console.log(e.target.titleId.value)
-    console.log(e.target.amountId.value)
-    console.log(e.target.dateId.value)
-    console.log('Submitted')
+    const title = e.target.titleId.value
+    const amount = e.target.amountId.value
+    const time = moment(e.target.dateId.value, "DD/MM/YYYY").valueOf();
+
+    // console.log(title)
+    // console.log(amount)
+    // console.log(time)
+
+    if (title !== '' && amount !== 0 && time !== null) {
+      const postRequestData = {
+        title,
+        amount,
+        time
+      }
+      console.log(postRequestData)
+      
+      fetch(expenseEndPoint, {
+        method: 'post',
+        headers: {
+          "Content-Type": "application/json",
+      },
+        body: JSON.stringify(postRequestData)
+      }).then(res => console.log(res))
+      .catch(e => console.log(e))
+      this.closeModal()
+      console.log('Submitted')
+    }
+
+
+
   }
 
   openModal() {
@@ -66,6 +97,7 @@ class ExpenseTable extends React.Component {
 
   closeModal() {
     this.setState({ modalIsOpen: false });
+    this.getExpense()
   }
 
   render() {
@@ -80,10 +112,10 @@ class ExpenseTable extends React.Component {
           handleDelete={this.handleDelete}
           handleUpdate={this.handleUpdate}
         />
-        <AddExpense 
-        modalIsOpen={this.state.modalIsOpen} 
-        closeModal={this.closeModal}
-        handleSubmit={this.handleAddExpenseSubmit} />
+        <AddExpense
+          modalIsOpen={this.state.modalIsOpen}
+          closeModal={this.closeModal}
+          handleSubmit={this.handleAddExpenseSubmit} />
       </section>
     )
   }
