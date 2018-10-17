@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cross-fetch": "^2.2.2",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
+    "moment": "^2.22.2",
     "mongodb": "^3.1.8",
     "mongoose": "^5.3.4",
     "mongoose-unique-validator": "^2.0.2",

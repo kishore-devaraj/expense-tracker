@@ -11,6 +11,13 @@ const { Expense } = require('./models/Expense')
 const app = express()
 app.use(bodyParser.json())
 
+app.use( function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, OPTIONS");
+  next();
+});
+
 const PORT = process.env.PORT || 3001
 
 app.get('/', (req, res) => {
@@ -33,8 +40,6 @@ app.get('/api/v1/expense', (req, res) => {
   .then(expenses => res.send(expenses))
   .catch(e => res.status(400).send(e))
 })
-
-
 
 app.delete('/api/v1/expense/:id', (req, res) => {
   const id = req.params.id
@@ -65,6 +70,8 @@ app.put('/api/v1/expense/:id', (req, res) => {
     res.send(expense)
   }).catch(e => res.status(404).send(e))
 })
+
+
 
 app.listen(PORT, (err) => {
   if (err) return console.log(err)

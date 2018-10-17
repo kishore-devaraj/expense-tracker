@@ -1,6 +1,8 @@
 import React from 'react'
+import fetch from 'cross-fetch'
 
 import './ExpenseTable.css'
+import { expenseEndPoint } from '../../config/httpConfig'
 import plusIcon from '../../assets/plus-circle-outline.svg'
 
 import ExpenseTableView from '../expense-table-view/ExpenseTableView'
@@ -10,27 +12,7 @@ class ExpenseTable extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      listOfExpense: [{
-        date: "2 Sept 2018",
-        title: "First Expense",
-        amount: 500
-      }, {
-        date: "2 Sept 2018",
-        title: "First Expense",
-        amount: 500
-      }, {
-        date: "2 Sept 2018",
-        title: "First Expense",
-        amount: 500
-      }, {
-        date: "2 Sept 2018",
-        title: "First Expense",
-        amount: 500
-      }, {
-        date: "2 Sept 2018",
-        title: "First Expense",
-        amount: 500
-      }],
+      listOfExpense: [],
       modalIsOpen: false
     }
     this.handleDelete = this.handleDelete.bind(this)
@@ -40,6 +22,19 @@ class ExpenseTable extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleAddExpenseSubmit = this.handleAddExpenseSubmit.bind(this)
   }
+
+  componentDidMount () {
+    console.log(expenseEndPoint)
+
+    fetch('http://localhost:3001/api/v1/expense')
+    .then(res => res.json())
+    .then(expenses => {
+      console.log(expenses)
+      this.setState({listOfExpense: expenses})
+    })
+    .catch(e => console.log(e))
+  }
+
 
   handleDelete(e) {
     e.preventDefault()
