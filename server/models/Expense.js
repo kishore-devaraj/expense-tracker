@@ -1,23 +1,26 @@
 const { mongoose } = require('../db/db')
+const uniqueValidator = require('mongoose-unique-validator')
 
 const ExpenseSchema = new mongoose.Schema({
-  Title: {
+  title: {
     type: 'String',
     required: true,
     trim: true,
     minlength: 1,
     unique: true
   }, 
-  Amount: {
+  amount: {
     type: 'Number',
     required: true,
     minlength: 1
   }, 
-  Date: {
+  time: {
     type: 'Number',
     required: true
   }
 })
+
+ExpenseSchema.plugin(uniqueValidator)
 
 const Expense = mongoose.model('Expense', ExpenseSchema)
 
