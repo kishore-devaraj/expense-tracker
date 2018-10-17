@@ -38,6 +38,7 @@ class ExpenseTable extends React.Component {
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handleAddExpenseSubmit = this.handleAddExpenseSubmit.bind(this)
   }
 
   handleDelete(e) {
@@ -56,6 +57,10 @@ class ExpenseTable extends React.Component {
     console.log('Updating')
   }
 
+  handleAddExpenseSubmit (e) {
+    e.preventDefault()
+    console.log('Submitted')
+  }
 
   openModal() {
     this.setState({ modalIsOpen: true });
@@ -79,8 +84,8 @@ class ExpenseTable extends React.Component {
         />
         <AddExpense 
         modalIsOpen={this.state.modalIsOpen} 
-        afterOpenModal={this.state.afterOpenModal}
-        closeModal={this.state.closeModal}/>
+        closeModal={this.closeModal}
+        handleSubmit={this.handleAddExpenseSubmit} />
       </section>
     )
   }
