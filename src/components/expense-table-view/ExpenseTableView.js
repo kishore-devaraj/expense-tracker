@@ -23,7 +23,7 @@ class ExpenseTableView extends React.Component {
               this.props.listOfExpense.map((listElement, index) =>
                 <TableRow key={listElement.date + listElement.title + index}
                   serialNo={index}
-                  date={listElement.date}
+                  time={listElement.time}
                   title={listElement.title}
                   amount={listElement.amount}
                   handleUpdate={this.props.handleUpdate}
@@ -39,7 +39,7 @@ class ExpenseTableView extends React.Component {
 const TableRow = (props) => {
   return (
       <tr>
-          <td>{moment(props.date).format("DD/MM/YYYY")}</td>
+          <td>{moment(props.time).format("DD/MM/YYYY")}</td>
           <td>{props.title}</td>
           <td>{props.amount}</td>
           <td onClick={props.handleUpdate}>

@@ -8,14 +8,17 @@ import plusIcon from '../../assets/plus-circle-outline.svg'
 
 import ExpenseTableView from '../expense-table-view/ExpenseTableView'
 import AddExpense from '../add-expense/AddExpense'
-import { get } from 'https';
 
 class ExpenseTable extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       listOfExpense: [],
-      modalIsOpen: false
+      modalIsOpen: false,
+      updateAmount: 0,
+      updateTitle: '',
+      updateDate: '',
+      modalTitle: 'Add Expense'
     }
     this.handleDelete = this.handleDelete.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
@@ -34,7 +37,6 @@ class ExpenseTable extends React.Component {
     fetch(expenseEndPoint)
       .then(res => res.json())
       .then(expenses => {
-        console.log(expenses)
         this.setState({ listOfExpense: expenses })
       })
       .catch(e => console.log(e))
@@ -43,8 +45,7 @@ class ExpenseTable extends React.Component {
 
   handleDelete(e) {
     e.preventDefault()
-    let indexToBeDeleted = e.target.id
-    // console.log(indexToBeDeleted)
+    const indexToBeDeleted = e.target.id
     let newListOfExpense = this.state.listOfExpense.slice()
     newListOfExpense = newListOfExpense.filter((expense, index) => {  
          
@@ -66,7 +67,17 @@ class ExpenseTable extends React.Component {
 
   handleUpdate(e) {
     e.preventDefault()
-    console.log('Updating')
+    const indexToBeUpdate = e.target.id
+    const expenseNeedToUpdate = this.state.listOfExpense[indexToBeUpdate]
+    this.expenseId = expenseNeedToUpdate._id
+
+    this.setState ({
+      updateTitle: expenseNeedToUpdate.title,
+      updateAmount: expenseNeedToUpdate.amount,
+      updateDate: moment(expenseNeedToUpdate.time).format("DD/MM/YYYY"),
+      modalTitle: 'Edit Expense'
+    })
+    this.openModal()
   }
 
   handleAddExpenseSubmit(e) {
@@ -74,21 +85,17 @@ class ExpenseTable extends React.Component {
     const title = e.target.titleId.value
     const amount = e.target.amountId.value
     const time = moment(e.target.dateId.value, "DD/MM/YYYY").valueOf();
-
-    // console.log(title)
-    // console.log(amount)
-    // console.log(time)
-
+    const method = this.state.modalTitle.indexOf('Add') !== -1 ? 'POST' : 'PUT'
+    const endPoint = method === 'POST' ? expenseEndPoint : expenseEndPoint + '/' + this.expenseId
     if (title !== '' && amount !== 0 && time !== null) {
       const postRequestData = {
         title,
         amount,
         time
       }
-      console.log(postRequestData)
-      
-      fetch(expenseEndPoint, {
-        method: 'post',
+
+      fetch(endPoint, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
       },
@@ -96,16 +103,23 @@ class ExpenseTable extends React.Component {
       }).then(res => console.log(res))
       .catch(e => console.log(e))
       this.closeModal()
-      console.log('Submitted')
     }
   }
 
-  openModal() {
-    this.setState({ modalIsOpen: true });
+  openModal(title) {
+    this.setState({ 
+      modalIsOpen: true,
+    });
   }
 
   closeModal() {
-    this.setState({ modalIsOpen: false });
+    this.setState({ 
+      modalIsOpen: false, 
+      updateTitle: '',
+      updateAmount: 0,
+      updateDate: '',
+      modalTitle: 'Add Expense'
+    });
     this.getExpense()
   }
 
@@ -124,7 +138,15 @@ class ExpenseTable extends React.Component {
         <AddExpense
           modalIsOpen={this.state.modalIsOpen}
           closeModal={this.closeModal}
-          handleSubmit={this.handleAddExpenseSubmit} />
+          modalTitle={this.state.modalTitle}
+          updateAmount={this.state.updateAmount}
+          updateTitle={this.state.updateTitle}
+          updateDate={this.state.updateDate}
+          handleSubmit={this.handleAddExpenseSubmit} 
+          onTitleChange={(e) => this.setState({updateTitle: e.target.value})}
+          onAmountChange={(e) => this.setState({updateAmount: e.target.value})}
+          onDateChange={(e) => this.setState({updateDate: e.target.value})}
+          />
       </section>
     )
   }

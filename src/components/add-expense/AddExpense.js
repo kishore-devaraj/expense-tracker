@@ -30,18 +30,18 @@ class AddExpense extends React.Component {
           isOpen={this.props.modalIsOpen}
           onRequestClose={this.props.closeModal}
           style={customStyles}
-          contentLabel="Example Modal"
+          contentLabel={this.props.modalTitle}
         >
           <section className="add-expense-modal-container">
             <div className="add-expense-header">
-              <div className="add-expense-title">Add Expense</div>
+              <div className="add-expense-title">{this.props.modalTitle}</div>
               <img src={closeIcon} alt='close icon' style={{cursor: 'pointer'}} onClick={this.props.closeModal} />
             </div>
             <form className="expense-adding-form" autoComplete='off' onSubmit={this.props.handleSubmit}>
-            <CustomInput type='text' label='Title' id='titleField' name='titleId' placeholder='Title goes here' />
-            <CustomInput type='number' label='Amount' id='amountField' name='amountId' placeholder='Amount Spent' />
-            <CustomInput type='text' label='Date' id='dateField' name='dateId' placeholder='On Which Date' />
-            <CustomButton buttonText='Add' />
+            <CustomInput type='text' value={this.props.updateTitle} onChange={this.props.onTitleChange} label='Title' id='titleField' name='titleId' placeholder='Title goes here' />
+            <CustomInput type='number' value={this.props.updateAmount} onChange={this.props.onAmountChange} label='Amount' id='amountField' name='amountId' placeholder='Amount Spent' />
+            <CustomInput type='text' value={this.props.updateDate} onChange={this.props.onDateChange} label='Date' id='dateField' name='dateId' placeholder='DD/MM/YYYY' />
+            <CustomButton buttonText={this.props.modalTitle.indexOf('Add') !== -1 ? 'Add' : 'Save'} />
             </form>
           </section>
         </Modal>
